@@ -1,0 +1,113 @@
+# Configure the format of the prompt
+format = """\
+        $custom\
+        $username\
+        $hostname\
+        $shlvl\
+        $singularity\
+        $kubernetes\
+        $directory\
+        $git_branch\
+        $git_commit\
+        $git_state\
+        $hg_branch\
+        $docker_context\
+        $package\
+        (↓ Toolchain version modules ↓)\
+        $cmake\
+        $dart\
+        $dotnet\
+        $elixir\
+        $elm\
+        $erlang\
+        $golang\
+        $helm\
+        $java\
+        $julia\
+        $nim\
+        $nodejs\
+        $ocaml\
+        $perl\
+        $php\
+        $purescript\
+        $python\
+        $ruby\
+        $rust\
+        $swift\
+        $terraform\
+        $zig\
+        (↑ Toolchain version modules ↑)\
+        $nix_shell\
+        $conda\
+        $memory_usage\
+        $aws\
+        $gcloud\
+        $env_var\
+        $crystal\
+        $cmd_duration\
+        (↑ above input line ↑)\
+        $line_break\
+        (↓ on input line ↓)\
+        $jobs\
+        $battery\
+        $time\
+        $status\
+        $character\
+    """
+[aws]
+disabled = true
+
+[cmd_duration]
+format = '\[[⏱ $duration]($style)\]'
+
+[docker_context]
+disabled = true
+format = '\[[$symbol$context]($style)\] '
+
+[gcloud]
+disabled = true
+
+[git_branch]
+disabled = false
+format = "on [$symbol$branch]($style) "
+style = "bold purple"
+# truncation_length = 7 # default = 2^63 - 1
+truncation_symbol = "…"
+
+[golang]
+format = '\[[go ($version)]($style)\] '
+
+[kubernetes]
+disabled = false
+format = ' \[[$symbol$context(\($namespace\))]($style)\] '
+symbol = '⛵️'
+
+[memory_usage]
+format = '\[$symbol[$ram( | $swap)]($style)\]'
+
+[python]
+format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+
+[rust]
+format = '\[[$symbol($version)]($style)\]'
+
+[username]
+format = '\[[$user]($style)\]'
+
+[custom.time_mood]
+command = """
+TIME=$(date +%H)
+if [[ "$TIME" -le 17 && "$TIME" -ge 8 ]];then
+    time_symbol="🌤"
+elif [[ "$TIME" -le 21 && "$TIME" -ge 18 ]];then
+    time_symbol="🌖"
+elif [[ "$TIME" -le 4 || "$TIME" -ge 22 ]];then
+    time_symbol="🌙"
+else
+    time_symbol="🌔"
+fi
+echo "$time_symbol "
+"""
+disabled = false
+format = "[$output]($style) "
+when = "true"
